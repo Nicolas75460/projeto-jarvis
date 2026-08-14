@@ -1,0 +1,8 @@
+customtkinter
+SpeechRecognition
+pyttsx3
+sounddevice
+numpy
+pyautogui
+psutil
+Pillow
