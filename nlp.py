@@ -205,6 +205,7 @@ def parse_command(raw_text, pending_clarification=None):
     
     # Scroll para Cima
     if _check_keywords(text_lower, [
+        "suba", "subir", "subiu",
         "rolar para cima", "role para cima", "rola para cima", "rolar pra cima", "role pra cima",
         "subir a página", "subir pagina", "suba a página", "suba a tela", "sobe a tela", "sobe a página",
         "subir a tela", "subir tela", "subir a tela", "subir página", "subir pagina",
@@ -214,6 +215,7 @@ def parse_command(raw_text, pending_clarification=None):
 
     # Scroll para Baixo
     if _check_keywords(text_lower, [
+        "desca", "desça", "desceu",
         "rolar para baixo", "role para baixo", "rola para baixo", "rolar pra baixo", "role pra baixo",
         "descer a página", "descer pagina", "desça a página", "desça a tela", "desce a tela", "desce a página",
         "descer a tela", "descer tela", "descer página", "descer pagina",

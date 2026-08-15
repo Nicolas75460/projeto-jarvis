@@ -85,7 +85,7 @@ class VoiceEngine:
                 self.ui.queue_message("log_detail", f"Voz padrão configurada: {voices[0].name}")
             
             # Velocidade da fala e volume
-            self.tts_engine.setProperty('rate', 185)
+            self.tts_engine.setProperty('rate', 210)
             self.tts_engine.setProperty('volume', 1.0)
             self.tts_available = True
         except Exception as e:
@@ -101,7 +101,7 @@ class VoiceEngine:
             # Calibração rápida em thread de background
             def _calibrate():
                 self.ui.queue_message("log_detail", "Calibrando microfone para ruído ambiente...")
-                threshold = self.mic.adjust_for_ambient_noise(duration=0.8)
+                threshold = self.mic.adjust_for_ambient_noise(duration=0.4)
                 self.ui.queue_message("log_success", f"Microfone calibrado (Sensibilidade: {int(threshold)}). Pronto!")
             
             threading.Thread(target=_calibrate, daemon=True).start()
@@ -125,7 +125,7 @@ class VoiceEngine:
                 voice = self.tts_engine.getProperty('voice')
                 if voice:
                     engine.setProperty('voice', voice)
-                engine.setProperty('rate', 185)
+                engine.setProperty('rate', 210)
                 
                 engine.say(text)
                 engine.runAndWait()
@@ -166,9 +166,9 @@ class VoiceEngine:
                 
                 # Captura frase usando nosso SoundDeviceMicrophone inteligente
                 audio_data = self.mic.listen_phrase(
-                    timeout=6.0,
-                    phrase_time_limit=12.0,
-                    silence_limit=1.1,
+                    timeout=3.0,
+                    phrase_time_limit=8.0,
+                    silence_limit=0.7,
                     stop_event=self.stop_event
                 )
                 
@@ -187,6 +187,7 @@ class VoiceEngine:
                     text = self.recognizer.recognize_google(audio_data, language="pt-BR")
                     if text and text.strip():
                         self.ui.queue_message("user_said", text.strip())
+                        self.speak(text.strip())
                         self._process_command(text.strip())
                 except sr.UnknownValueError:
                     # Não identificou palavras claras
